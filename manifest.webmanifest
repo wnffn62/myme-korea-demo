@@ -1,0 +1,10 @@
+{
+  "name": "my:ME 신용 성장 지도",
+  "short_name": "my:ME",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f7f8",
+  "theme_color": "#281a63",
+  "lang": "ko-KR",
+  "description": "내 데이터를 연결해 신용 성장 가능성과 맞춤 대출조건을 확인하는 고객 체험 앱"
+}
