@@ -460,6 +460,42 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
 .stable-detail-orb span { color:#8ef1d1; font:850 12px/1 var(--mono); letter-spacing:.12em; }
 .stable-detail-orb strong { margin-top:7px; font:900 25px/1 var(--mono); overflow-wrap:anywhere; }
 .stable-detail-orb small { margin-top:6px; color:rgba(255,255,255,.68); font-size:12px; }
+.remit-auction-card { margin-top:16px; padding:20px; overflow:hidden; position:relative; border-radius:26px; color:#fff; background:linear-gradient(145deg,#17152f,#2d2461 58%,#224e68); box-shadow:0 14px 30px rgba(29,24,63,.18); }
+.remit-auction-card::after { content:''; position:absolute; width:170px; height:170px; right:-95px; top:-95px; border-radius:50%; background:rgba(64,226,181,.13); }
+.remit-auction-head { position:relative; z-index:1; display:flex; align-items:start; justify-content:space-between; gap:14px; }
+.remit-auction-head .eyebrow { color:#94efd5; }
+.remit-auction-head h2 { margin:6px 0 5px; font-size:24px; letter-spacing:-.045em; }
+.remit-auction-head p { margin:0; max-width:290px; color:rgba(255,255,255,.72); font-size:13px; line-height:1.55; word-break:keep-all; }
+.remit-gavel { width:52px; height:52px; flex:0 0 auto; display:grid; place-items:center; border:1px solid rgba(255,255,255,.16); border-radius:17px; color:#94efd5; background:rgba(255,255,255,.08); }
+.remit-gavel svg { width:28px; height:28px; }
+.remit-selects { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:17px; }
+.remit-selects label { min-width:0; }
+.remit-selects label>span { display:block; margin:0 0 7px 2px; color:rgba(255,255,255,.68); font-size:12px; font-weight:750; }
+.remit-selects select { width:100%; min-height:48px; padding:0 12px; border:1px solid rgba(255,255,255,.17); border-radius:14px; color:#201a47; background:#fff; font-size:13px; font-weight:750; outline:0; }
+.remit-amount { margin-top:17px; }.remit-amount label { color:#fff; }.remit-amount label span { color:rgba(255,255,255,.72); }.remit-amount input[type=range] { accent-color:#56e0b8; }
+.remit-auction-stage { min-height:126px; margin:14px 0; display:flex; align-items:center; justify-content:center; gap:7px; }
+.remit-auction-stage>div { position:relative; z-index:2; display:grid; justify-items:center; gap:7px; }
+.remit-auction-stage>div>span { width:52px; height:52px; display:grid; place-items:center; border-radius:17px; color:#251e53; background:#fff; font:900 16px/1 var(--mono); box-shadow:0 8px 18px rgba(0,0,0,.16); }
+.remit-auction-stage small { color:rgba(255,255,255,.66); font-size:11px; white-space:nowrap; }
+.remit-auction-stage>i { width:34px; border-top:1px dashed rgba(255,255,255,.34); }
+.remit-auction-summary { margin-top:17px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.remit-auction-summary b,.remit-auction-summary span { display:block; }.remit-auction-summary b { font-size:16px; }.remit-auction-summary span { margin-top:4px; color:rgba(255,255,255,.62); font-size:12px; }
+.remit-auction-summary button { min-height:38px; padding:0 11px; border:1px solid rgba(255,255,255,.17); border-radius:12px; color:#fff; background:rgba(255,255,255,.08); font-size:12px; font-weight:800; }
+.remit-bid-list { display:grid; gap:9px; margin:13px 0; }
+.remit-bid { position:relative; width:100%; padding:14px; display:grid; grid-template-columns:28px 1fr; gap:10px; text-align:left; border:1px solid rgba(255,255,255,.13); border-radius:18px; color:#fff; background:rgba(255,255,255,.075); }
+.remit-bid.selected { border-color:#79ebca; background:rgba(46,203,160,.14); box-shadow:inset 0 0 0 1px rgba(121,235,202,.15); }
+.remit-rank { width:28px; height:28px; display:grid; place-items:center; border-radius:10px; color:#251e53; background:#fff; font:900 12px/1 var(--mono); }
+.remit-bid-brand { min-width:0; display:grid; grid-template-columns:39px 1fr; gap:10px; align-items:center; }
+.remit-bid-brand>span { width:39px; height:39px; display:grid; place-items:center; border-radius:13px; color:#145f4d; background:#dff9f0; font:900 13px/1 var(--mono); }
+.remit-bid-brand b { display:block; font-size:14px; }.remit-bid-brand small { display:block; margin-top:4px; color:rgba(255,255,255,.62); font-size:11px; line-height:1.4; }
+.remit-bid-metrics { grid-column:2; display:grid; grid-template-columns:.8fr 1.25fr .8fr; gap:6px; }
+.remit-bid-metrics>div { min-width:0; padding:9px 8px; border-radius:12px; background:rgba(0,0,0,.13); }
+.remit-bid-metrics small,.remit-bid-metrics strong { display:block; }.remit-bid-metrics small { color:rgba(255,255,255,.58); font-size:10px; }.remit-bid-metrics strong { margin-top:5px; font-size:12px; line-height:1.25; overflow-wrap:anywhere; }
+.remit-selected { position:absolute; right:13px; top:13px; display:flex; align-items:center; gap:4px; color:#9af0d7; font-size:11px; font-weight:850; }.remit-selected svg { width:15px; height:15px; }
+.remit-continue { margin-top:4px; background:linear-gradient(135deg,#4b31d4,#6b35e2); }
+.stable-bid-review { display:grid; grid-template-columns:1fr 1.25fr .9fr; gap:8px; margin:16px 0; }
+.stable-bid-review>div { min-width:0; padding:14px 10px; border:1px solid #d5ebe3; border-radius:15px; background:#f1faf7; }
+.stable-bid-review small,.stable-bid-review strong { display:block; }.stable-bid-review small { color:var(--ink-500); font-size:11px; }.stable-bid-review strong { margin-top:6px; color:#14614d; font:850 14px/1.25 var(--mono); overflow-wrap:anywhere; }
 .stable-calc-card { margin-top:16px; padding:21px; border:1px solid #b8dfd2; border-radius:25px; background:linear-gradient(145deg,#fff,#f1fbf7); box-shadow:0 10px 24px rgba(18,128,92,.08); }
 .stable-title-row { display:flex; align-items:start; justify-content:space-between; gap:10px; }
 .stable-title-row .eyebrow { color:#0c8060; }
@@ -576,6 +612,22 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
   .stable-detail-hero { min-height:326px; padding:21px 18px; }
   .stable-detail-hero h1 { font-size:27px; }
   .stable-detail-orb { width:170px; }
+  .remit-auction-card { padding:17px; }
+  .remit-auction-head h2 { font-size:22px; }
+  .remit-selects { grid-template-columns:1fr; }
+  .remit-auction-stage { gap:4px; }
+  .remit-auction-stage>div>span { width:45px; height:45px; }
+  .remit-auction-stage>i { width:18px; }
+  .remit-auction-stage small { font-size:10px; }
+  .remit-bid { padding:12px 10px; grid-template-columns:26px 1fr; gap:8px; }
+  .remit-rank { width:26px; height:26px; }
+  .remit-bid-brand { grid-template-columns:36px 1fr; gap:8px; padding-right:54px; }
+  .remit-bid-brand>span { width:36px; height:36px; }
+  .remit-bid-metrics { gap:4px; }
+  .remit-bid-metrics>div { padding:8px 5px; }
+  .remit-bid-metrics small { font-size:9px; }
+  .remit-bid-metrics strong { font-size:11px; }
+  .stable-bid-review { grid-template-columns:1fr; }
   .stable-calc-card { padding:17px; }
   .stable-title-row h2 { font-size:19px; }
   .stable-detail-quote { grid-template-columns:1fr; }

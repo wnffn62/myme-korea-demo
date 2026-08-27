@@ -81,6 +81,7 @@
     currentBalance:2400, currentRate:8.1, targetRate:6.0, remainingTerm:36,
     lessonDone:false, auctionRun:false, selectedBid:null, auctionReviewed:false,
     voiceConsent:false, advisorUsed:false, stableReviewed:false, stableAmount:500,
+    stableAuctionRun:false, selectedStableBid:null, stableDestination:'PH', stableReceive:'bank',
     advisorMessages:[{role:'ai',text:'대출 조건, 신용점수, 역경매, 스테이블코인을 쉬운 말로 설명해드려요.'}],
     largeText:false, notifications:true, watchRate:true, modal:null, toast:'',
   };
@@ -176,6 +177,25 @@
     const fx=1380;
     return { fee, usdc:(krw-fee)/fx };
   }
+  const stableDestinations = [
+    { id:'PH', name:'필리핀', currency:'PHP' },
+    { id:'VN', name:'베트남', currency:'VND' },
+    { id:'MN', name:'몽골', currency:'MNT' },
+    { id:'US', name:'미국', currency:'USD' },
+  ];
+  function stableDestination() { return stableDestinations.find(item=>item.id===state.stableDestination) || stableDestinations[0]; }
+  function stableAuctionBids() {
+    const krw=Number(state.stableAmount)*10000;
+    const fx=1380;
+    return [
+      { id:'remit-a', initial:'A', name:'제휴 송금사 A', feeRate:.0029, fixed:3500, speed:'약 10분', tag:'총비용 추천' },
+      { id:'remit-b', initial:'B', name:'제휴 송금사 B', feeRate:.0024, fixed:8500, speed:'약 5분', tag:'빠른 도착' },
+      { id:'remit-c', initial:'C', name:'제휴 송금사 C', feeRate:.0038, fixed:0, speed:'당일 도착', tag:'고정비 없음' },
+    ].map(item=>{
+      const fee=Math.round(krw*item.feeRate+item.fixed);
+      return {...item,fee,usdc:(krw-fee)/fx};
+    }).sort((a,b)=>a.fee-b.fee);
+  }
   function profileName() { return ({employee:'직장인',freelancer:'프리랜서',business:'개인사업자'})[state.profile]; }
 
   function badgeData() {
@@ -207,7 +227,7 @@
   }
 
   function bottomNav() {
-    const items = [['home','home','홈'],['connect','link','연결'],['journey','journey','성장'],['compare','compare','비교'],['my','user','내 정보']];
+    const items = [['home','home','홈'],['connect','link','연결'],['compare','gavel','대출'],['stable','coins','송금'],['my','user','내 정보']];
     return `<nav class="bottom-nav" aria-label="주요 메뉴">${items.map(([id,ic,label])=>`<button data-nav="${id}" class="${state.screen===id?'on':''}" ${state.screen===id?'aria-current="page"':''}>${svg(ic)}<span>${label}</span></button>`).join('')}</nav>`;
   }
 
@@ -244,6 +264,10 @@
 
   function stableScreen() {
     const q=stableQuote();
+    const bids=stableAuctionBids();
+    const selected=bids.find(bid=>bid.id===state.selectedStableBid) || bids[0];
+    const shownQuote=state.stableAuctionRun ? selected : q;
+    const destination=stableDestination();
     const uses=[
       ['user','해외 가족·생활비 송금','보낼 금액과 예상 수령량을 먼저 확인해요.'],
       ['wallet','글로벌 프리랜서 정산','해외에서 받은 대금을 USDC 정산 흐름으로 살펴봐요.'],
@@ -256,10 +280,13 @@
       ['4','현지 수령','수취인이 지원되는 방식으로 안전하게 받아요.'],
     ];
     return `<section class="screen stable-screen" data-screen-view="stable">
-      <button class="screen-back" data-nav="home">${svg('arrow')} 홈으로</button>
-      <article class="stable-detail-hero"><div><span class="eyebrow">MY:ME GLOBAL SETTLEMENT</span><h1>원화로 보내고,<br>USDC로 빠르게 정산해요</h1><p>신고된 전문 사업자와 연결해 환율, 이용 비용, 예상 수령량을 송금 전에 확인하는 선택형 서비스예요.</p></div><div class="stable-detail-orb"><span>USDC</span><strong>${q.usdc.toFixed(2)}</strong><small>예상 수령 수량</small></div></article>
+      <article class="stable-detail-hero"><div><span class="eyebrow">MY:ME REMITTANCE</span><h1>송금사 제안을 받고<br>가장 좋은 조건을 골라요</h1><p>신고·인허가 요건을 확인한 제휴 송금사가 비용, 예상 수령량, 도착시간을 제안하는 역경매형 비교 서비스예요.</p></div><div class="stable-detail-orb"><span>USDC</span><strong>${shownQuote.usdc.toFixed(2)}</strong><small>${state.stableAuctionRun?'선택 제안 예상 수령량':'기본 예상 수령량'}</small></div></article>
 
-      <article class="stable-calc-card"><div class="stable-title-row"><div><span class="eyebrow">SEND PREVIEW</span><h2>해외송금 미리 계산하기</h2></div><span class="sample-tag">체험 계산</span></div><div class="field"><label><span>보낼 금액</span><b>${fmt(state.stableAmount)}만원</b></label><input data-range="stableAmount" type="range" min="10" max="3000" step="10" value="${state.stableAmount}"></div><div class="stable-detail-quote"><div><small>예상 이용 비용</small><strong>${Math.round(q.fee/10000).toLocaleString('ko-KR')}만원</strong><span>송금액의 0.4% 예시</span></div><div><small>예상 수령 수량</small><strong>${q.usdc.toFixed(2)} USDC</strong><span>1 USDC = 1,380원 예시</span></div></div><div class="stable-detail-flow"><div><span>${svg('wallet')}</span><b>원화</b></div><i>›</i><div><span>${svg('shield')}</span><b>신고 사업자</b></div><i>›</i><div><span>${svg('coins')}</span><b>USDC</b></div><i>›</i><div><span>${svg('user')}</span><b>현지 수령</b></div></div><small class="stable-calc-note">실제 환율, 수수료, 지원 국가와 도착 시간은 제휴 사업자의 최종 화면에서 다시 확인해요.</small></article>
+      <article class="remit-auction-card"><div class="remit-auction-head"><div><span class="eyebrow">REMITTANCE REVERSE AUCTION</span><h2>송금사 역경매</h2><p>한 번 입력하면 여러 제휴 송금사의 조건을 같은 기준으로 비교해요.</p></div><div class="remit-gavel">${svg('gavel')}</div></div><div class="remit-selects"><label><span>받는 국가</span><select data-select="stableDestination">${stableDestinations.map(item=>`<option value="${item.id}" ${item.id===destination.id?'selected':''}>${item.name} · ${item.currency}</option>`).join('')}</select></label><label><span>수령 방식</span><select data-select="stableReceive"><option value="bank" ${state.stableReceive==='bank'?'selected':''}>현지 은행계좌</option><option value="wallet" ${state.stableReceive==='wallet'?'selected':''}>지원 지갑</option><option value="cash" ${state.stableReceive==='cash'?'selected':''}>제휴 수령처</option></select></label></div><div class="field remit-amount"><label><span>보낼 금액</span><b>${fmt(state.stableAmount)}만원</b></label><input data-range="stableAmount" type="range" min="10" max="3000" step="10" value="${state.stableAmount}"></div>
+        ${state.stableAuctionRun?`<div class="remit-auction-summary"><div><b>${bids.length}개 송금사 제안 도착</b><span>${destination.name} · ${state.stableReceive==='bank'?'현지 은행계좌':state.stableReceive==='wallet'?'지원 지갑':'제휴 수령처'}</span></div><button data-stable-auction-run>다시 받기</button></div><div class="remit-bid-list">${bids.map((bid,i)=>`<button class="remit-bid ${selected.id===bid.id?'selected':''}" data-stable-bid="${bid.id}"><span class="remit-rank">${i+1}</span><div class="remit-bid-brand"><span>${bid.initial}</span><div><b>${bid.name}</b><small>${bid.tag} · 제휴 전 체험 예시</small></div></div><div class="remit-bid-metrics"><div><small>총 이용 비용</small><strong>${bid.fee.toLocaleString('ko-KR')}원</strong></div><div><small>예상 수령</small><strong>${bid.usdc.toFixed(2)} USDC</strong></div><div><small>예상 도착</small><strong>${bid.speed}</strong></div></div>${selected.id===bid.id?`<span class="remit-selected">${svg('check')} 선택됨</span>`:''}</button>`).join('')}</div><button class="primary wide remit-continue" data-stable-continue>${selected.name} 조건 확인하기 ${svg('arrow')}</button>`:`<div class="remit-auction-stage"><div><span>A</span><small>비용 제안</small></div><i></i><div><span>B</span><small>속도 제안</small></div><i></i><div><span>C</span><small>수령량 제안</small></div></div><button class="primary wide" data-stable-auction-run>송금사 제안 받아보기 ${svg('arrow')}</button>`}
+      </article>
+
+      <article class="stable-calc-card"><div class="stable-title-row"><div><span class="eyebrow">SETTLEMENT PREVIEW</span><h2>${state.stableAuctionRun?'선택한 송금 조건':'USDC 정산 미리 보기'}</h2></div><span class="sample-tag">체험 계산</span></div><div class="stable-detail-quote"><div><small>예상 이용 비용</small><strong>${shownQuote.fee.toLocaleString('ko-KR')}원</strong><span>${state.stableAuctionRun?selected.name:'기본 0.4%'} 예시</span></div><div><small>예상 수령 수량</small><strong>${shownQuote.usdc.toFixed(2)} USDC</strong><span>1 USDC = 1,380원 예시</span></div></div><div class="stable-detail-flow"><div><span>${svg('wallet')}</span><b>원화</b></div><i>›</i><div><span>${svg('shield')}</span><b>제휴 송금사</b></div><i>›</i><div><span>${svg('coins')}</span><b>USDC</b></div><i>›</i><div><span>${svg('user')}</span><b>${destination.name} 수령</b></div></div><small class="stable-calc-note">실제 환율, 수수료, 지원 국가와 도착 시간은 선택한 제휴 송금사의 최종 화면에서 다시 확인해요.</small></article>
 
       <div class="section-head stable-section-head"><h2>이런 때 활용할 수 있어요</h2></div><div class="stable-use-grid">${uses.map(([icon,title,text])=>`<article><span>${svg(icon)}</span><h3>${title}</h3><p>${text}</p></article>`).join('')}</div>
 
@@ -346,6 +373,10 @@
     } else if (m.type === 'product') {
       const p = products.find(item=>item.id===m.id);
       content = `<div class="sheet-head"><div><span class="eyebrow">EVIDENCE PREVIEW</span><h2>${p.name}</h2><p>${p.type} · 조건 미리 보기</p></div><button class="sheet-close" data-close aria-label="닫기">${svg('close')}</button></div><div class="notice safe"><b>현재 금융정보 ${coverage()}%를 활용할 수 있어요</b>${connectedSources().map(s=>s.name).join(' · ')}</div><div class="consent-box"><div class="consent-row"><span class="consent-check">${svg('spark')}</span><div><b>기대할 수 있는 제안</b><span>제휴 금융기관이 연결된 정보를 확인해 금리와 한도를 제안해요.</span></div></div><div class="consent-row"><span class="consent-check">${svg('eye')}</span><div><b>더 연결하면 좋은 정보</b><span>${sourceCatalog.filter(s=>!state.connected[s.id]).map(s=>s.name).join(' · ') || '맞춤 비교에 필요한 정보를 모두 연결했어요'}</span></div></div><div class="consent-row"><span class="consent-check">${svg('shield')}</span><div><b>내 정보 확인하기</b><span>연결한 정보를 직접 확인하고 수정 요청도 할 수 있어요.</span></div></div></div><div class="notice info"><b>조건을 편하게 미리 살펴보세요</b>${p.rate.toFixed(2)}%·${fmt(p.max)}만원은 체험용 예시이며, 실제 조건은 금융기관이 제안해요.</div><button class="secondary wide" data-close>다른 조건도 비교하기</button>`;
+    } else if (m.type === 'stable-bid') {
+      const bid=stableAuctionBids().find(item=>item.id===state.selectedStableBid) || stableAuctionBids()[0];
+      const destination=stableDestination();
+      content = `<div class="sheet-head"><div><span class="eyebrow">REMITTANCE BID REVIEW</span><h2>${bid.name} 조건 확인</h2><p>${destination.name} · ${fmt(state.stableAmount)}만원 송금 제안</p></div><button class="sheet-close" data-close aria-label="닫기">${svg('close')}</button></div><div class="stable-bid-review"><div><small>총 이용 비용</small><strong>${bid.fee.toLocaleString('ko-KR')}원</strong></div><div><small>예상 수령량</small><strong>${bid.usdc.toFixed(2)} USDC</strong></div><div><small>예상 도착</small><strong>${bid.speed}</strong></div></div><div class="consent-box"><div class="consent-row"><span class="consent-check">${svg('shield')}</span><div><b>신고·인허가 요건 확인</b><span>FIU 신고와 송금 구조에 필요한 외국환·해외송금 관련 자격을 계약 전에 확인해요.</span></div></div><div class="consent-row"><span class="consent-check">${svg('user')}</span><div><b>본인확인과 수취인 확인</b><span>실제 이용 시 제휴사가 KYC·AML과 수취인 정보를 확인해요.</span></div></div><div class="consent-row"><span class="consent-check">${svg('eye')}</span><div><b>최종 비용 다시 확인</b><span>환율, 수수료, 네트워크 비용, 예상 수령액을 최종 화면에서 확인해요.</span></div></div></div><div class="notice info"><b>현재는 제안 비교 체험이에요</b>실제 송금 신청이나 자산 전송은 진행되지 않으며, 정식 제휴와 법률검토 후 연결해요.</div><button class="primary wide" data-stable-review>조건 확인 완료</button><button class="secondary wide" style="margin-top:8px" data-close>다른 제안 비교하기</button>`;
     } else if (m.type === 'lesson') {
       content = `<div class="sheet-head"><div><span class="eyebrow">FINANCIAL QUEST 01</span><h2>갈아타기로 절약액 키우기</h2><p>더 유리한 금리와 전체 절약액을 함께 찾아봐요.</p></div><button class="sheet-close" data-close aria-label="닫기">${svg('close')}</button></div><div class="lesson-copy"><b>절약액을 정확하게 보는 방법</b><p>줄어드는 이자에서 수수료와 부대비용을 함께 계산하면 실제로 아낄 수 있는 금액을 확인할 수 있어요.</p></div><div class="quiz-box"><b>더 알뜰한 선택은 무엇일까요?</b><button data-quiz="wrong">금리가 조금이라도 낮으면 바로 이동</button><button data-quiz="correct">이자 절약액과 수수료·조건을 함께 비교</button><button data-quiz="wrong">한도가 가장 큰 상품으로 이동</button></div><div class="notice safe"><b>학습할수록 XP가 쌓여요</b>금융지식을 쌓는 즐거움을 위한 보상이며, 실제 금융조건은 금융기관이 결정해요.</div>`;
     } else if (m.type === 'coach') {
@@ -466,6 +497,10 @@
     const coachAction = event.target.closest('[data-coach-action]');
     if (coachAction) { runCoachAction(coachAction.dataset.coachAction); return; }
     if (event.target.closest('[data-auction-run]')) { const first=!state.auctionReviewed; state.auctionRun=true; state.auctionReviewed=true; state.selectedBid=auctionBids()[0]?.id||null; save(); celebrate(); showToast(first?'20 XP 획득 · 예시 금융사 응찰이 도착했어요.':'같은 입력값으로 응찰 조건을 다시 계산했어요.'); return; }
+    if (event.target.closest('[data-stable-auction-run]')) { state.stableAuctionRun=true; state.selectedStableBid=stableAuctionBids()[0]?.id||null; save(); celebrate(); showToast('3개 제휴 송금사의 예시 조건이 도착했어요.'); return; }
+    const stableBid = event.target.closest('[data-stable-bid]');
+    if (stableBid) { state.selectedStableBid=stableBid.dataset.stableBid; save(); render(); return; }
+    if (event.target.closest('[data-stable-continue]')) { state.modal={type:'stable-bid'}; render(); return; }
     const bid = event.target.closest('[data-bid]');
     if (bid) { state.selectedBid=bid.dataset.bid; save(); render(); return; }
     const advisorQuestion = event.target.closest('[data-advisor-question]');
@@ -507,11 +542,16 @@
     if (event.target.matches('[data-number]')) { state[event.target.dataset.number]=Number(event.target.value); save(); render(); }
   });
   app.addEventListener('change', event => {
-    if (event.target.matches('[data-select]')) { state[event.target.dataset.select]=['term','remainingTerm'].includes(event.target.dataset.select)?Number(event.target.value):event.target.value; save(); render(); }
+    if (event.target.matches('[data-select]')) {
+      const key=event.target.dataset.select;
+      state[key]=['term','remainingTerm'].includes(key)?Number(event.target.value):event.target.value;
+      if (['stableDestination','stableReceive'].includes(key)) { state.stableAuctionRun=false; state.selectedStableBid=null; }
+      save(); render();
+    }
   });
 
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('./sw.js?v=11',{updateViaCache:'none'}).then(reg=>reg.update()).catch(()=>{});
+    navigator.serviceWorker.register('./sw.js?v=12',{updateViaCache:'none'}).then(reg=>reg.update()).catch(()=>{});
   }
   render();
 })();
