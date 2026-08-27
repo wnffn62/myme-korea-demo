@@ -229,6 +229,7 @@
           ${node('bank','n1','bank')}${node('credit','n2','credit')}${node('tax','n3','tax')}${node('health','n4','health')}${node('telecom','n5','phone')}${node('platform','n6','store')}
         </div>
         <div class="passport-stats"><div><span>연결한 데이터</span><strong>${connectedSources().length} / ${sourceCatalog.length}개</strong></div><div><span>나의 성장 단계</span><strong>Lv.${li.index} ${li.current.name}</strong></div><div><span>최근 확인</span><strong>방금 전</strong></div></div>
+        <button class="passport-global" data-nav="stable"><span>${svg('coins')}</span><div><b>USDC 해외송금</b><small>예상 비용과 수령량 바로 보기</small></div>${svg('arrow')}</button>
       </div>
       <div class="notice safe"><b>연결할수록 더 나은 대출조건을 찾는 데 도움이 돼요</b>소득과 성실한 금융생활을 더 잘 보여주면, 한도와 금리 제안을 더 정확하게 비교할 수 있어요.</div>
       <article class="home-stable"><div class="home-stable-head"><div class="home-coin">${svg('coins')}</div><div><span class="eyebrow">GLOBAL SETTLEMENT</span><h2>스테이블코인 해외송금</h2><p>원화로 보내고, 신고된 전문 사업자를 통해 USDC로 빠르게 정산하는 흐름을 확인해보세요.</p></div></div><div class="home-stable-flow"><span>원화</span><b>›</b><span>신고 사업자</span><b>›</b><span>USDC</span><b>›</b><span>현지 수령</span></div><div class="home-stable-numbers"><div><small>${fmt(state.stableAmount)}만원 송금 예시</small><strong>${stable.usdc.toFixed(2)} USDC</strong></div><div><small>예상 이용 비용</small><strong>${Math.round(stable.fee/10000).toLocaleString('ko-KR')}만원</strong></div></div><button class="stable-entry" data-nav="stable">스테이블코인 송금 자세히 보기 ${svg('arrow')}</button></article>
@@ -510,7 +511,7 @@
   });
 
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('./sw.js?v=10',{updateViaCache:'none'}).then(reg=>reg.update()).catch(()=>{});
+    navigator.serviceWorker.register('./sw.js?v=11',{updateViaCache:'none'}).then(reg=>reg.update()).catch(()=>{});
   }
   render();
 })();

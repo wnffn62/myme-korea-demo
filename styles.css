@@ -93,6 +93,13 @@ main { min-height: calc(100vh - 160px); }
 .passport-stats div { min-width: 0; }
 .passport-stats span { display: block; color: rgba(255,255,255,.66); font-size: 11px; }
 .passport-stats strong { display: block; margin-top: 5px; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.passport-global { width:100%; min-height:58px; margin-top:14px; padding:8px 12px; display:grid; grid-template-columns:42px 1fr 20px; gap:10px; align-items:center; text-align:left; border:1px solid rgba(129,244,210,.55); border-radius:17px; color:#fff; background:linear-gradient(110deg,rgba(21,146,109,.82),rgba(25,110,109,.62)); box-shadow:0 8px 22px rgba(4,26,40,.22); }
+.passport-global>span { width:42px; height:42px; display:grid; place-items:center; border-radius:14px; color:#0d7659; background:#d9fff3; }
+.passport-global>span svg { width:25px; height:25px; }
+.passport-global div { min-width:0; }
+.passport-global b { display:block; font-size:15px; line-height:1.25; word-break:keep-all; }
+.passport-global small { display:block; margin-top:4px; color:rgba(255,255,255,.76); font-size:12px; line-height:1.35; word-break:keep-all; }
+.passport-global>svg { width:19px; height:19px; }
 
 .next-mission { margin-top: 14px; border-radius: 22px; background: #fff; padding: 16px; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
 .mission-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; }

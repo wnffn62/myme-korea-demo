@@ -1,5 +1,5 @@
-const CACHE = 'myme-korea-v10';
-const ASSETS = ['./index.html', './styles.css?v=10', './app.js?v=10', './manifest.webmanifest', './customer_qr.png'];
+const CACHE = 'myme-korea-v11';
+const ASSETS = ['./index.html', './styles.css?v=11', './app.js?v=11', './manifest.webmanifest', './customer_qr.png'];
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
