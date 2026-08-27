@@ -49,7 +49,7 @@ button { cursor: pointer; }
 .brand-lockup { display: flex; align-items: center; gap: 10px; }
 .brand-mark { width: 34px; height: 34px; color: #fff; background: linear-gradient(145deg,var(--brand-600),var(--brand-900)); border-radius: 11px 11px 16px 11px; display: grid; place-items: center; font-weight: 800; font-size: 15px; letter-spacing: -.04em; box-shadow: 0 7px 16px rgba(84,67,194,.24); }
 .brand-copy strong { display: block; font-size: 18px; letter-spacing: -.045em; line-height: 1; }
-.brand-copy span { display: block; color: var(--ink-500); font: 700 9px/1.2 var(--mono); letter-spacing: .13em; margin-top: 5px; }
+.brand-copy span { display: block; color: var(--ink-500); font: 750 7.5px/1.2 var(--mono); letter-spacing: .035em; margin-top: 5px; white-space: nowrap; }
 .header-actions { display: flex; align-items: center; gap: 6px; }
 .icon-btn { width: 40px; height: 40px; border: 0; background: transparent; border-radius: 13px; display: grid; place-items: center; color: var(--ink-700); position: relative; }
 .icon-btn:hover { background: #eeebf3; }
@@ -100,6 +100,19 @@ main { min-height: calc(100vh - 160px); }
 .passport-global b { display:block; font-size:15px; line-height:1.25; word-break:keep-all; }
 .passport-global small { display:block; margin-top:4px; color:rgba(255,255,255,.76); font-size:12px; line-height:1.35; word-break:keep-all; }
 .passport-global>svg { width:19px; height:19px; }
+.passport-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:14px; }
+.passport-actions button { min-width:0; min-height:72px; padding:9px 5px; display:grid; justify-items:center; align-content:center; gap:4px; border:1px solid rgba(255,255,255,.18); border-radius:17px; color:#fff; background:rgba(255,255,255,.09); }
+.passport-actions button:first-child { border-color:rgba(129,244,210,.60); background:linear-gradient(145deg,rgba(21,146,109,.78),rgba(25,110,109,.55)); }
+.passport-actions button>span { width:31px; height:31px; display:grid; place-items:center; border-radius:11px; color:#241852; background:#fff; }
+.passport-actions button:first-child>span { color:#0d7659; background:#d9fff3; }
+.passport-actions svg { width:18px; height:18px; }
+.passport-actions b { font-size:13px; line-height:1.1; }
+.passport-actions small { color:rgba(255,255,255,.74); font:800 10px/1.1 var(--mono); white-space:nowrap; }
+.myd-bridge { margin:15px 0; padding:15px; display:grid; grid-template-columns:45px 1fr; gap:12px; align-items:center; border:1px solid #d4cafa; border-radius:19px; background:linear-gradient(135deg,#fff,#f2efff); }
+.myd-bridge>span { width:45px; height:45px; display:grid; place-items:center; border-radius:15px; color:#fff; background:linear-gradient(145deg,var(--brand-600),var(--brand-900)); }
+.myd-bridge svg { width:24px; height:24px; }
+.myd-bridge b { display:block; color:var(--brand-900); font-size:15px; }
+.myd-bridge p { margin:4px 0 0; color:var(--ink-500); font-size:12px; line-height:1.5; word-break:keep-all; }
 
 .next-mission { margin-top: 14px; border-radius: 22px; background: #fff; padding: 16px; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
 .mission-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
@@ -157,12 +170,13 @@ main { min-height: calc(100vh - 160px); }
 .score-arrow { width:36px; height:36px; display:grid; place-items:center; border-radius:12px; color:#fff; background:var(--success); font-size:21px; font-weight:900; }
 .score-impact small { display:block; color:#52756b; font-size:12px; font-weight:650; }
 .score-impact strong { display:block; margin-top:2px; font:900 23px/1.1 var(--mono); letter-spacing:-.04em; }
+.score-impact strong.score-text { font-family:var(--font); font-size:18px; letter-spacing:-.035em; white-space:nowrap; }
 .coverage-chip { color:var(--info); background:#fff; border:1px solid #cfddeb; border-radius:999px; padding:7px 9px; font-size:11px; font-weight:800; white-space:nowrap; }
 .connect-btn { border: 0; background: var(--brand-100); color: var(--brand-700); border-radius: 14px; min-height: 44px; padding: 0 13px; font-size: 13px; font-weight: 800; }
 .connect-btn.gain, .connected-action { grid-column:1 / -1; width:100%; min-height:58px; border-radius:16px; }
 .connect-btn.gain { display:flex; flex-direction:row; justify-content:space-between; align-items:center; padding:0 17px; color:#fff; background:linear-gradient(135deg,var(--brand-600),var(--brand-700)); box-shadow:0 8px 18px rgba(107,53,226,.20); }
 .connect-btn.gain span { font-size:16px; font-weight:850; }
-.connect-btn.gain small { color:#d9fff4; font:800 12px/1 var(--font); margin:0; }
+.connect-btn.gain strong { padding:7px 9px; border-radius:999px; color:#d9fff4; background:rgba(255,255,255,.13); font:850 12px/1 var(--mono); white-space:nowrap; }
 .connected-action { display:flex; align-items:center; justify-content:center; gap:7px; border:0; color:#107356; background:#dff3ec; font-size:14px; font-weight:800; opacity:1; }
 .connected-action svg { width:19px; height:19px; }
 
@@ -355,6 +369,15 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
 .credit-step span { width:27px; height:27px; display:grid; place-items:center; margin:0 auto 5px; border-radius:9px; background:#eceaf0; }.credit-step svg { width:14px; height:14px; }.credit-step b,.credit-step small { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }.credit-step b { font-size:7.5px; }.credit-step small { margin-top:3px; font:750 7px/1 var(--mono); }.credit-step.on { color:var(--success); background:var(--success-bg); border-color:#bfe2d5; }.credit-step.on span { color:#fff; background:var(--success); }
 
 .auction-card { margin-bottom:14px; padding:18px; border-radius:25px; color:#fff; background:linear-gradient(145deg,#1d153a,#38246f 55%,#224d70); box-shadow:var(--shadow-md); }
+.data-decision-bridge { margin:-8px 0 15px; padding:14px; display:grid; grid-template-columns:42px 1fr auto; gap:11px; align-items:center; border:1px solid #cceade; border-radius:19px; background:linear-gradient(135deg,#fff,#edf9f5); }
+.data-decision-bridge>span { width:42px; height:42px; display:grid; place-items:center; border-radius:14px; color:#fff; background:var(--success); }
+.data-decision-bridge>span svg { width:22px; height:22px; }
+.data-decision-bridge small,.data-decision-bridge b,.data-decision-bridge p { display:block; }
+.data-decision-bridge small { color:#168161; font:800 9px/1.2 var(--mono); letter-spacing:.08em; }
+.data-decision-bridge b { margin-top:4px; font-size:14px; }
+.data-decision-bridge p { margin:3px 0 0; max-width:220px; color:var(--ink-500); font-size:11px; line-height:1.4; word-break:keep-all; }
+.data-decision-bridge button { min-width:80px; min-height:46px; padding:7px 9px; border:1px solid #bfe2d5; border-radius:13px; color:#0f7054; background:#fff; font-size:10px; font-weight:800; }
+.data-decision-bridge button strong { margin-top:3px; color:var(--success); font:850 12px/1 var(--mono); }
 .auction-hero { display:flex; justify-content:space-between; gap:12px; align-items:start; }.auction-hero .eyebrow { color:#9ff0d8; }.auction-hero h2 { margin:5px 0 4px; font-size:19px; letter-spacing:-.04em; }.auction-hero p { margin:0; max-width:275px; color:rgba(255,255,255,.66); font-size:10px; line-height:1.5; }
 .gavel-orb { width:48px; height:48px; flex:0 0 auto; display:grid; place-items:center; border-radius:16px; color:#fff; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.16); }
 .auction-stage { position:relative; height:145px; display:flex; justify-content:center; align-items:start; gap:38px; padding-top:26px; }.auction-stage>i { position:absolute; left:15%; right:15%; top:53px; border-top:1px dashed rgba(255,255,255,.24); }.lender-dot { position:relative; z-index:2; width:39px; height:39px; display:grid; place-items:center; border-radius:14px; color:#261755; background:#fff; font:850 13px/1 var(--mono); }
@@ -443,7 +466,7 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
 .home-stable-flow span { font-size:11px; font-weight:850; white-space:nowrap; }.home-stable-flow b { color:#66a894; }
 .home-stable-numbers { display:grid; grid-template-columns:1.35fr .65fr; gap:8px; }
 .home-stable-numbers>div { min-width:0; padding:13px; border:1px solid #d4eae2; border-radius:15px; background:rgba(255,255,255,.84); }
-.home-stable-numbers small { display:block; color:var(--ink-500); font-size:11px; }.home-stable-numbers strong { display:block; margin-top:5px; font:850 17px/1.1 var(--mono); color:#12634d; overflow-wrap:anywhere; }
+.home-stable-numbers small,.home-stable-numbers span { display:block; color:var(--ink-500); font-size:11px; line-height:1.35; }.home-stable-numbers strong { display:block; margin:5px 0 3px; font:850 17px/1.1 var(--mono); color:#12634d; overflow-wrap:anywhere; }
 .stable-entry { width:100%; min-height:50px; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:7px; border:0; border-radius:15px; color:#fff; background:#138361; font-size:14px; font-weight:850; }.stable-entry svg { width:18px; height:18px; }
 
 /* Stablecoin overseas settlement detail */
@@ -460,6 +483,11 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
 .stable-detail-orb span { color:#8ef1d1; font:850 12px/1 var(--mono); letter-spacing:.12em; }
 .stable-detail-orb strong { margin-top:7px; font:900 25px/1 var(--mono); overflow-wrap:anywhere; }
 .stable-detail-orb small { margin-top:6px; color:rgba(255,255,255,.68); font-size:12px; }
+.partner-rail-note { margin:12px 0 -3px; padding:13px 14px; display:grid; grid-template-columns:38px 1fr; gap:10px; align-items:center; border:1px solid #b8dfd2; border-radius:17px; color:#12634d; background:#e9f7f2; }
+.partner-rail-note>span { width:38px; height:38px; display:grid; place-items:center; border-radius:13px; color:#fff; background:#188260; }
+.partner-rail-note svg { width:21px; height:21px; }
+.partner-rail-note p { margin:0; font-size:12px; line-height:1.48; word-break:keep-all; }
+.partner-rail-note b { display:block; font-size:13px; }
 .remit-auction-card { margin-top:16px; padding:20px; overflow:hidden; position:relative; border-radius:26px; color:#fff; background:linear-gradient(145deg,#17152f,#2d2461 58%,#224e68); box-shadow:0 14px 30px rgba(29,24,63,.18); }
 .remit-auction-card::after { content:''; position:absolute; width:170px; height:170px; right:-95px; top:-95px; border-radius:50%; background:rgba(64,226,181,.13); }
 .remit-auction-head { position:relative; z-index:1; display:flex; align-items:start; justify-content:space-between; gap:14px; }
@@ -472,7 +500,7 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
 .remit-selects label { min-width:0; }
 .remit-selects label>span { display:block; margin:0 0 7px 2px; color:rgba(255,255,255,.68); font-size:12px; font-weight:750; }
 .remit-selects select { width:100%; min-height:48px; padding:0 12px; border:1px solid rgba(255,255,255,.17); border-radius:14px; color:#201a47; background:#fff; font-size:13px; font-weight:750; outline:0; }
-.remit-amount { margin-top:17px; }.remit-amount label { color:#fff; }.remit-amount label span { color:rgba(255,255,255,.72); }.remit-amount input[type=range] { accent-color:#56e0b8; }
+.remit-amount { margin-top:17px; }.remit-amount label { color:#fff; }.remit-amount label span { color:rgba(255,255,255,.72); }.remit-amount label b { color:#fff; text-shadow:0 1px 10px rgba(0,0,0,.22); }.remit-amount input[type=range] { accent-color:#56e0b8; }
 .remit-auction-stage { min-height:126px; margin:14px 0; display:flex; align-items:center; justify-content:center; gap:7px; }
 .remit-auction-stage>div { position:relative; z-index:2; display:grid; justify-items:center; gap:7px; }
 .remit-auction-stage>div>span { width:52px; height:52px; display:grid; place-items:center; border-radius:17px; color:#251e53; background:#fff; font:900 16px/1 var(--mono); box-shadow:0 8px 18px rgba(0,0,0,.16); }
@@ -596,6 +624,14 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
   .passport-stats { gap:4px; }
   .passport-stats span { font-size:9.5px; }
   .passport-stats strong { font-size: 11.5px; }
+  .passport-actions { gap:6px; }
+  .passport-actions button { min-height:68px; padding-left:3px; padding-right:3px; }
+  .passport-actions b { font-size:12px; }
+  .passport-actions small { font-size:9px; }
+  .myd-bridge { grid-template-columns:40px 1fr; padding:13px; }
+  .myd-bridge>span { width:40px; height:40px; }
+  .data-decision-bridge { grid-template-columns:40px 1fr; }
+  .data-decision-bridge button { grid-column:1 / -1; width:100%; }
   .gate-shell { padding:16px; border-radius:27px; }
   .gate-hero { padding:22px 17px 17px; }
   .gate-hero h1 { font-size:28px; line-height:1.2; }
