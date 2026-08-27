@@ -73,6 +73,7 @@ main { min-height: calc(100vh - 160px); }
 .passport-top { display: flex; justify-content: space-between; align-items: start; }
 .passport-top small { display: block; font: 700 11px/1.3 var(--mono); letter-spacing: .12em; color: rgba(255,255,255,.74); }
 .passport-top h1 { margin: 7px 0 0; max-width: 290px; font-size: 27px; line-height: 1.2; letter-spacing: -.045em; }
+.passport-top h1,.gate-hero h1,.gate-shell>h1,.screen-title,.coach-card h2,.notice { word-break:keep-all; overflow-wrap:break-word; text-wrap:balance; }
 .demo-pill { display: inline-flex; align-items: center; gap: 5px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.10); padding: 7px 9px; border-radius: 999px; font-size: 10px; color: rgba(255,255,255,.84); }
 .demo-pill i { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
 .constellation { position: relative; height: 260px; margin-top: 4px; }
@@ -423,6 +424,21 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
 .advisor-compose textarea { font-size:14px; }
 .voice-btn { font-size:13px; }
 
+.home-stable { margin:16px 0; padding:19px; border:1px solid #a9ddcc; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(145deg,#fff 0%,#eaf9f3 100%); box-shadow:0 8px 24px rgba(18,128,92,.09); }
+.home-stable::after { content:''; position:absolute; width:150px; height:150px; right:-82px; top:-88px; border-radius:50%; background:rgba(38,161,123,.12); }
+.home-stable-head { position:relative; z-index:1; display:grid; grid-template-columns:56px 1fr; gap:13px; align-items:start; }
+.home-coin { width:56px; height:56px; display:grid; place-items:center; border-radius:19px; color:#fff; background:linear-gradient(145deg,#059669,#26a17b); box-shadow:0 9px 20px rgba(5,150,105,.20); }
+.home-coin svg { width:29px; height:29px; }
+.home-stable .eyebrow { color:#0c8060; }
+.home-stable h2 { margin:5px 0 4px; font-size:20px; line-height:1.3; letter-spacing:-.04em; word-break:keep-all; }
+.home-stable p { margin:0; color:#4f6f66; font-size:13px; line-height:1.55; word-break:keep-all; }
+.home-stable-flow { display:flex; align-items:center; justify-content:space-between; gap:4px; margin:16px 0 10px; padding:12px; border-radius:15px; color:#12634d; background:#dff3ec; }
+.home-stable-flow span { font-size:11px; font-weight:850; white-space:nowrap; }.home-stable-flow b { color:#66a894; }
+.home-stable-numbers { display:grid; grid-template-columns:1.35fr .65fr; gap:8px; }
+.home-stable-numbers>div { min-width:0; padding:13px; border:1px solid #d4eae2; border-radius:15px; background:rgba(255,255,255,.84); }
+.home-stable-numbers small { display:block; color:var(--ink-500); font-size:11px; }.home-stable-numbers strong { display:block; margin-top:5px; font:850 17px/1.1 var(--mono); color:#12634d; overflow-wrap:anywhere; }
+.stable-entry { width:100%; min-height:50px; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:7px; border:0; border-radius:15px; color:#fff; background:#138361; font-size:14px; font-weight:850; }.stable-entry svg { width:18px; height:18px; }
+
 /* Customer entry and QR login */
 .customer-gate { min-height:100vh; padding:22px 16px; display:grid; place-items:center; background:radial-gradient(circle at 50% 0,#eee8ff 0,#f7f7f9 45%,#e5e4ea 100%); }
 .gate-shell { width:min(100%,448px); min-height:calc(100vh - 44px); padding:24px; border-radius:32px; background:#fff; box-shadow:0 24px 70px rgba(35,22,78,.18); }
@@ -463,9 +479,36 @@ body.large-text .tiny, body.large-text .screen-lead { font-size: .95em; }
 }
 @media (max-width: 360px) {
   .screen { padding-left: 12px; padding-right: 12px; }
-  .passport { padding-left: 17px; padding-right: 17px; }
+  .passport { min-height:438px; padding-left: 16px; padding-right: 16px; }
+  .passport-top { gap:8px; }
+  .passport-top h1 { max-width:230px; font-size:24px; line-height:1.22; }
+  .passport-top small { font-size:9.5px; }
+  .demo-pill { flex:0 0 auto; padding:7px 8px; font-size:10px; }
+  .constellation { height:248px; }
+  .orbit { width:202px; height:202px; }
+  .passport-core { width:110px; height:110px; }
+  .passport-core strong { font-size:37px; }
+  .node { width:49px; height:49px; border-radius:16px; }
+  .node svg { width:25px; height:25px; }
+  .node>span { min-width:64px; font-size:9.5px; }
+  .node.n1 { left:5%; }.node.n2 { right:4%; }.node.n3 { left:1%; }.node.n4 { right:1%; }.node.n5 { left:18%; }.node.n6 { right:17%; }
   .badge-grid { grid-template-columns: repeat(2,1fr); }
-  .passport-stats strong { font-size: 11px; }
+  .passport-stats { gap:4px; }
+  .passport-stats span { font-size:9.5px; }
+  .passport-stats strong { font-size: 11.5px; }
+  .gate-shell { padding:16px; border-radius:27px; }
+  .gate-hero { padding:22px 17px 17px; }
+  .gate-hero h1 { font-size:28px; line-height:1.2; }
+  .gate-hero>p { font-size:14px; }
+  .gate-visual { height:195px; }
+  .gate-orbit { width:52px; height:52px; }
+  .gate-orbit svg { width:24px; height:24px; }.gate-orbit small { top:56px; font-size:10px; }
+  .home-stable { padding:16px; }
+  .home-stable-head { grid-template-columns:50px 1fr; gap:11px; }
+  .home-coin { width:50px; height:50px; }
+  .home-stable h2 { font-size:18px; }
+  .home-stable-flow { padding:10px 8px; }.home-stable-flow span { font-size:9.5px; }
+  .home-stable-numbers { grid-template-columns:1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
