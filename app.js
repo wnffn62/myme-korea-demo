@@ -509,6 +509,8 @@
     if (event.target.matches('[data-select]')) { state[event.target.dataset.select]=['term','remainingTerm'].includes(event.target.dataset.select)?Number(event.target.value):event.target.value; save(); render(); }
   });
 
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    navigator.serviceWorker.register('./sw.js?v=10',{updateViaCache:'none'}).then(reg=>reg.update()).catch(()=>{});
+  }
   render();
 })();
